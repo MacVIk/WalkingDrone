@@ -9,6 +9,11 @@
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #include "task.h"
+#include "TaskWrapper.h"
+
+#include "terminal.h"
+
+static Terminal terminal;
 
 /*
  *   System Clock Configuration
@@ -25,10 +30,6 @@
  *   VDD(V)                         = 3.3
  *   Flash Latency(WS)              = 2
  */
-
-/* Demo features */
-void set_led_pin();
-void run(void *pvParameters);
 
 /*
  * Do not delete this function It provides
@@ -66,40 +67,16 @@ void system_clock_config()
 
 int main(void) {
 
+
     /* Set described options*/
     system_clock_config();
 
-    /* Set GPIO for LED*/
-    set_led_pin();
-
     /* Task create with a "run" function inside */
-    xTaskCreate(run, "run", 64, NULL, 1, NULL);
+    terminal.task_create(256, 2, "termTask");
 
     /* Start freertos */
     vTaskStartScheduler();
 
     return 1;
-}
-
-void run(void *pvParameters)
-{
-    /* Infinite circle with a LED flashing */
-    while (1) {
-        LL_GPIO_SetOutputPin(GPIOC, LL_GPIO_PIN_13);
-        vTaskDelay(1000);
-        LL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_13);
-        vTaskDelay(1000);
-    }
-}
-
-void set_led_pin()
-{
-    /* Set port clocking */
-    LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_GPIOC);
-
-    /* User settings */
-    LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinSpeed(GPIOC, LL_GPIO_PIN_13, LL_GPIO_SPEED_FREQ_LOW);
-    LL_GPIO_SetPinOutputType(GPIOC, LL_GPIO_PIN_13, LL_GPIO_OUTPUT_PUSHPULL);
 }
 
