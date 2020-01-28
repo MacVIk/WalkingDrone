@@ -2,3 +2,4 @@
 #Exclude intermediate files
 Debug/
 Release/
+.settings/
