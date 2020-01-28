@@ -15,7 +15,9 @@ public:
     Terminal();
     virtual ~Terminal();
 
-    void run();
+    void run() override;
 };
+
+extern Terminal terminal;
 
 #endif /* CODE_TERMINAL_H_ */

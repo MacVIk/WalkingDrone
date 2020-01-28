@@ -13,7 +13,7 @@
 #include "task.h"
 
 TaskWrapper::TaskWrapper() {
-    this->task_handle = 0;
+    this->taskHandle = 0;
 
 }
 
@@ -26,7 +26,7 @@ bool TaskWrapper::task_create(const StackType_t stackDepth, UBaseType_t uxPriori
 {
     BaseType_t result;
     result = xTaskCreate((TaskFunction_t) TaskWrapper::task_function,
-            pcName, stackDepth, this, uxPriority, &task_handle);
+            pcName, stackDepth, this, uxPriority, &taskHandle);
     if (result == pdPASS)
         return true;
     else

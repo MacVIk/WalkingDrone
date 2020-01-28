@@ -6,14 +6,13 @@
 #include "stm32f1xx_ll_bus.h"
 
 #include <stdio.h>
+#include <UartTerminal.h>
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #include "task.h"
 #include "TaskWrapper.h"
 
 #include "terminal.h"
-
-static Terminal terminal;
 
 /*
  *   System Clock Configuration
@@ -67,14 +66,16 @@ void system_clock_config()
 
 int main(void) {
 
-
     /* Set described options*/
     system_clock_config();
 
-    /* Task create with a "run" function inside */
+    /* Handler for high level commands */
     terminal.task_create(256, 2, "termTask");
 
-    /* Start freertos */
+    /* Peripheral initialization */
+    uartTerm.init();
+
+    /* Start FreeRTOS */
     vTaskStartScheduler();
 
     return 1;

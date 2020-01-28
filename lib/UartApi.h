@@ -15,10 +15,11 @@
 #include "stm32f1xx.h"
 
 class UartApi {
-
 public:
-    UartApi();
-    virtual ~UartApi();
+    UartApi() {
+    }
+    virtual ~UartApi() {
+    }
 
     /*
      * Peripheral initialization,

@@ -17,7 +17,7 @@ public:
     TaskWrapper();
     virtual ~TaskWrapper();
 
-    TaskHandle_t task_handle;
+    TaskHandle_t taskHandle;
     bool task_create(const StackType_t ulStackDepth, UBaseType_t priority,
             const portCHAR * const name);
 protected:
