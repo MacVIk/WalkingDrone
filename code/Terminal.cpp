@@ -69,7 +69,7 @@ void Terminal::run() {
         } else if (uartTerm.uart_read_byte() == SET_ANGLE) {
             uint16_t word;
             uartTerm.uart_read(arr_rx, 3);
-            memcpy(&word, &arr_rx, sizeof(word));
+            memcpy(&word, &arr_rx[1], sizeof(word));
             uint8_t len = makeWriteWordPacket(DXL_ID, arr_tx, MX106_REG_GOAL_POSITION, word);
             uartTerm.uart_send(arr_tx, len);
             uartDxl->uart_send(arr_tx, len);
@@ -79,12 +79,14 @@ void Terminal::run() {
 
             //Second debug stage
         } else if (uartTerm.uart_read_byte() == DXL_SET_ANGLE) {
-            uint16_t position = 0;
-            uint16_t error;
-            arr_tx[0] = DXL_SET_ANGLE;
-            uartTerm.uart_send(arr_tx, 1);
+            uint16_t position {0};
+            uint16_t error {0};
+            uartTerm.uart_read(arr_rx, 3);
+            memcpy(&position, &arr_rx[1], sizeof(position));
 
             error = dxl.readAngle(position);
+            memcpy(arr_tx, &position, sizeof(position));
+            uartTerm.uart_send(arr_tx, sizeof(position));
 
             // Error
         } else {
