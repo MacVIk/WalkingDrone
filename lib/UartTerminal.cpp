@@ -1,4 +1,4 @@
-/*
+    /*
  * UartTerminal.cpp
  *
  *  Created on: 15 џэт. 2020 у.
@@ -21,7 +21,6 @@
 #include "af_map.h"
 
 UartTerminal uartTerm;
-
 
 UartTerminal::UartTerminal()
 {

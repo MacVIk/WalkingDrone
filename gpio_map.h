@@ -23,5 +23,11 @@
 #define TERM_UART_PIN_RX            LL_GPIO_PIN_10
 #define TERM_UART_OTPUT_TYPE_RX     LL_GPIO_MODE_FLOATING
 
+/* DXL_UART */
+#define DXL_UART_PORT               GPIOA
+#define DXL_UART_PIN_RX_TX          LL_GPIO_PIN_2
+#define DXL_UART_PIN_MODE_TX        LL_GPIO_MODE_ALTERNATE
+#define DXL_UART_PIN_MODE_RX        LL_GPIO_MODE_FLOATING
+
 
 #endif /* GPIO_MAP_H_ */
