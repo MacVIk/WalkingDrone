@@ -71,7 +71,7 @@ struct UnpackResult {
 };
 
 // Debug functions
-void PrintPacket(uint8_t* data, uint16_t num_bytes);
+//ToDo
 
 // Pack functions
 uint16_t makePingPacket(uint8_t id, uint8_t* dataArr);

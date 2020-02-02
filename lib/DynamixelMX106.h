@@ -23,6 +23,12 @@
 #define MX106_REG_PRESENT_POSITION      36
 #define MX106_REG_MOVING                46
 #define MX106_REG_TORQUE_ENABLE         24
+#define MX106_REG_PRESENT_LOAD          40
+#define MX106_REG_PRESENT_VOLTAGE       42
+
+// Internal flags
+#define MX106_NO_AKNOWLEGE              ((uint16_t) 0b00000010)
+#define MX106_PACKET_INVALID            ((uint16_t) 0b00000001)
 
 
 #include <stdint.h>
@@ -36,15 +42,19 @@ public:
     DynamixelMX106(uint8_t id);
     virtual ~DynamixelMX106() = default;
 
-/* Primary dxl settings */
+    /* Primary dxl settings */
 
-/* Communication */
-    void ping();
-    void setAngle(uint16_t position);
-    void setTorque(bool position);
-    uint16_t readAngle();
-    uint16_t movStatus();
+    /* Communication */
+    /* Write */
+    uint16_t ping();
+    uint16_t setAngle(uint16_t position);
+    uint16_t setTorque(bool position);
 
+    /* Read */
+    uint16_t readAngle(uint16_t &pos);
+    uint16_t readMovStatus(uint16_t &movFlag);
+    uint16_t readTorque(uint16_t &torq);
+    uint16_t readVoltage(uint16_t &volt);
 
 private:
     uint8_t sendArr[MX106_MAX_PACKET_SIZE_TX];
@@ -52,9 +62,8 @@ private:
 
     uint8_t id;
     uint8_t error;
-    uint16_t position;
 
-    void sendPack(uint8_t len);
+    uint16_t sendPack(uint8_t len);
     uint16_t processPacket(UnpackRes result);
 
 };

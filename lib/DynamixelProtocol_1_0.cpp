@@ -32,27 +32,6 @@ inline uint8_t highByte(uint16_t word) {
     return (word >> 8) & 0xFF;
 }
 
-void PrintPacket(uint8_t* data, uint16_t num_bytes) {
-    int i;
-    if (num_bytes >= DXL_PREFIX_SIZE) {
-        printf("Prefix: ");
-        for (i = 0; i < DXL_PREFIX_SIZE; i++) {
-            printf("%02x | ", data[i]);
-        }
-
-        printf("Payload: ");
-        for (; i < num_bytes; i++) {
-            printf("%02x | ", data[i]);
-        }
-        printf("\n");
-    } else {
-        printf("Prefix not complete: ");
-        for (i = 0; i < num_bytes; i++) {
-            printf("%02x | ", data[i]);
-        }
-    }
-}
-
 // Returns the full packet size.
 uint16_t makePingPacket(uint8_t id, uint8_t* dataArr)
 {
